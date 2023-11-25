@@ -51,7 +51,7 @@ const makeNewBlock = () => {
 
 // 키를 수신할 이벤트 리스너
 
-const key_down =(e)=>{
+document.addEventListener ('keydown', (e)=>{
     if(e.key === "AroowLeft"){
         this.moveBlock('m', 1)
     }else if(e.key === "ArrowRight"){
@@ -65,7 +65,7 @@ const key_down =(e)=>{
     restart.addEventListener('click', ()=>{
         this.restart()
     })
-}
+})
     
 
 // 블록 렌더링
@@ -88,6 +88,17 @@ const renderBlock = () => {
 const moveBlock = (where, amount) => {
     movingBlock[where] += amount
     checkNextBlock(where)
+}
+
+// drop block
+
+// 블록 drop
+// downInterval을 clear하고 8ms마다 아래로 이동하게 만든다.
+const dropBlock =()=>{
+    clearInterval(this.downInterval)
+    this.downInterval = setInterval(() => {
+        this.moveBlock('n', 1)
+    }, 8)
 }
 
 
@@ -157,15 +168,6 @@ const checkNextBlock = (where = '') => {
     }
 
 
-}
-
-// 블록 drop
-// downInterval을 clear하고 8ms마다 아래로 이동하게 만든다.
-const dropBlock=()=>{
-    clearInterval(this.downInterval)
-    this.downInterval=setInterval(()=>{
-        this.moveBlock('n', 1)
-    }, 8)
 }
 
 // 다시 시작
