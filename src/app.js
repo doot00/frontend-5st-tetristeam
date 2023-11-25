@@ -47,22 +47,26 @@ const makeNewBlock = () => {
     checkNextBlock('start')
     makeNextBlock()
 }
-// 키보드 조작
-document.addEventListener('keydown', (e)=>{
-    if(e.key === 'ArrowLeft' || key === 39){
+
+
+// 키를 수신할 이벤트 리스너
+
+const key_down =(e)=>{
+    if(e.key === "AroowLeft"){
         this.moveBlock('m', 1)
-    }else if(e.key === 'ArrowRight' || key === 37){
+    }else if(e.key === "ArrowRight"){
         this.moveBlock('m', -1)
-    }else if(e.key === 'ArrowDown' || key === 40){
+    }else if(e.key === "ArrowDown"){
         this.moveBlock('n', 1)
-    }else if(e.key === ' ' || key === 32){
+    }else if(e.key === " "){
         this.dropBlock()
     }
-  const restart = document.querySelector('.restart')
-  restart.addEventListener('click', () => {
-    this.reStart()
-  })
-});
+    const restart = document.querySelector('.restart')
+    restart.addEventListener('click', ()=>{
+        this.restart()
+    })
+}
+    
 
 // 블록 렌더링
 const renderBlock = () => {
@@ -78,6 +82,14 @@ const renderBlock = () => {
         target.classList.add(type, 'moving')
     })
 }
+
+// 블럭 이동
+// where방향으로 amount만큼 현재 블럭의 값을 수정한다.
+const moveBlock = (where, amount) => {
+    movingBlock[where] += amount
+    checkNextBlock(where)
+}
+
 
 // 다음에올 블럭 랜덤 세팅
 const makeNextBlock = () => {
@@ -97,6 +109,7 @@ const finishBlock = () => {
     })
     makeNewBlock()
 }
+
 
 // 게임 종료
 const finishGame = () => {
@@ -146,16 +159,19 @@ const checkNextBlock = (where = '') => {
 
 }
 
+// 블록 drop
+// downInterval을 clear하고 8ms마다 아래로 이동하게 만든다.
+const dropBlock=()=>{
+    clearInterval(this.downInterval)
+    this.downInterval=setInterval(()=>{
+        this.moveBlock('n', 1)
+    }, 8)
+}
+
 // 다시 시작
 const restart = () => {
     popup.style.display = 'none'
     init()
-}
-
-// 블럭 이동
-const moveBlock = (where, amount) => {
-    movingBlock[where] += amount
-    checkNextBlock(where)
 }
 
 // 초기화
